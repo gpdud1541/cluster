@@ -20,23 +20,25 @@ module.exports = {
       // 'PORT': 3000,
       'NODE_ENV': 'production',
     }
-  }]
+  }],
   // }, {
   //   script: './service-worker/',
   //   watch: ['./service-worker']
   // }],
 
   // 배포
-  // deploy : {
-  //   production : {
-  //     user : 'SSH_USERNAME',
-  //     host : 'SSH_HOSTMACHINE',
-  //     ref  : 'origin/master',
-  //     repo : 'GIT_REPOSITORY',
-  //     path : 'DESTINATION_PATH',
-  //     'pre-deploy-local': '',
-  //     'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production',
-  //     'pre-setup': ''
-  //   }
-  // }
+  deploy : {
+    production : {
+      user : 'SSH_USERNAME',
+      host : 'SSH_HOSTMACHINE',
+      ref  : 'origin/master',
+      repo : 'GIT_REPOSITORY',
+      path : 'DESTINATION_PATH',
+      'pre-deploy-local': '',
+      // 가장 중요 pm2에 의한 배포가 끝난 후 실행
+      // npm 패키지 install & 프로세스 재시작
+      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production',
+      'pre-setup': ''
+    }
+  }
 };

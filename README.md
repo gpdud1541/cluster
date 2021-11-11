@@ -199,3 +199,43 @@ pm2 start ecosystem.config.js --env production
 ```
 결과 - pm2 start ecosystem.config.js
 ![ex_screenshot](./screenshot/img1.png)
+
++ Build
+```javascript
+module.exports = {
+  apps : [{
+    script: 'api.js',
+  }],
+   
+  // Deployment Configuration
+  deploy : {
+    production : {
+       "key"  : "/path/to/some.pem", 
+       "user" : "ubuntu",
+       "host" : ["192.168.0.13", "192.168.0.14", "192.168.0.15"], // 여러 호스트에 배포
+       "ref"  : "origin/master",
+       "repo" : "git@github.com:Username/repository.git",
+       "path" : "/var/www/my-repository",
+       "post-deploy" : "npm install",
+    //    "pre-setup",
+    //    "post-setup",
+    //    "pre-deploy",
+    //    "pre-deploy-local"
+    }
+  }
+};
+```
+
+```py
+# 프로비저닝
+pm2 deploy production setup
+
+# 애플리케이션 배포
+pm2 deploy production
+
+# rollback
+pm2 deploy production revert 1
+
+# 일회성 실행 명령
+pm2 deploy production exec "pm2 reload all"
+```
