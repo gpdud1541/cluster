@@ -69,7 +69,7 @@ if (cluster.isMaster) {
     worker.on('message', (message) => {
         console.log('-----------------');
         console.log('To. 마스터');
-        console.log(`${worker.process.pid} 워커의 메시지: ${message}`)
+        console.log(`${worker.process.pid} 워커의 메시지: ${message}`);
         console.log('-----------------');
     });
 

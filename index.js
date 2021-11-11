@@ -10,8 +10,10 @@ if (cluster.isMaster) {
 
     // 생성한 워커가 보내는 메시지
     worker.on('message', (message) => {
+        console.log('-----------------');
         console.log('To. 마스터');
-        console.log(`${worker.process.pid} 워커의 메시지: ${message}`)
+        console.log(`${worker.process.pid} 워커의 메시지: ${message}`);
+        console.log('-----------------');
     });
 
     // 생성한 워커에게 보내는 메시지
@@ -58,8 +60,10 @@ if (cluster.isMaster) {
 if (cluster.isWorker) {
     // 마스터가 보낸 메시지
     process.on('message', (message) => {
+        console.log('-----------------');
         console.log('To. 워커');
         console.log(`마스터의 메시지: ${message}`);
+        console.log('-----------------');
     });
 
     // 마스터에게 보내는 메시지
