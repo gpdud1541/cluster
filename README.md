@@ -1,13 +1,14 @@
 # NodeJS
 ## 클러스터(Cluster)
 + CPU 코어를 모두 사용할 수 있게 해주는 모듈  
-병렬로 실행된 서버의 개수만큼 요청이 분산됨. **서버 성능 향상**  
+병렬로 실행된 서버의 개수만큼 요청이 분산됨. <**서버 성능 향상**>
   
 ```
 npm i cluster
 npm i http
 npm i os
 ```
+javascript
 ```javascript
 const cluster = require('cluster');
 const http = require('http');
@@ -59,16 +60,17 @@ if (cluster.isMaster) {
 
     console.log(`${process.pid}번 워커 실행`);
 }
-```  
-  
-``` javascript
+
+// ---------------------------------------------------
 if (cluster.isMaster) {
     var worker = cluster.fork();
 
     // 생성한 워커가 보내는 메시지
     worker.on('message', (message) => {
+        console.log('-----------------');
         console.log('To. 마스터');
         console.log(`${worker.process.pid} 워커의 메시지: ${message}`)
+        console.log('-----------------');
     });
 
     // 생성한 워커에게 보내는 메시지
@@ -78,8 +80,10 @@ if (cluster.isMaster) {
 if (cluster.isWorker) {
     // 마스터가 보낸 메시지
     process.on('message', (message) => {
+        console.log('-----------------');
         console.log('To. 워커');
         console.log(`마스터의 메시지: ${message}`);
+        console.log('-----------------');
     });
 
     // 마스터에게 보내는 메시지
@@ -88,17 +92,21 @@ if (cluster.isWorker) {
 ```
   
 결과
-```
+```py
 마스터 프로세스 아이디: 13524
 18880번 워커 실행
 8086 port on
 9012번 워커 실행
 8086 port on
 1160번 워커 실행
+-----------------
 To. 마스터
 1160 워커의 메시지: 1160 pid를 가진 워커가 보내는 메시지
+-----------------
+-----------------
 To. 워커
 마스터의 메시지: 마스터가 보내는 메시지
+-----------------
 8086 port on
 ```
 
@@ -144,7 +152,15 @@ pm2 restart 0               # Restart specific process id
 
 pm2 delete 0                # Will remove process from pm2 list
 pm2 delete all              # Will remove all processes from pm2 list
-```  
+```   
+----  
+  
+```
+pm2 monit
+```
+![ex_screenshot](./screenshot/img2.png)
+  
+---  
   
 ecosystem.config.js
 ``` javascript
@@ -174,3 +190,6 @@ module.exports = {
 };
 
 ```
+---
+결과  
+![ex_screenshot](./screenshot/img1.png)
