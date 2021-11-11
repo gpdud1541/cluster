@@ -1,5 +1,5 @@
 # NodeJS
-## 클러스터(Cluster)
+## 클러스터 (Cluster)
 + CPU 코어를 모두 사용할 수 있게 해주는 모듈  
 병렬로 실행된 서버의 개수만큼 요청이 분산됨. <**서버 성능 향상**>
   
@@ -8,6 +8,7 @@ npm i cluster
 npm i http
 npm i os
 ```
+---
 javascript
 ```javascript
 const cluster = require('cluster');
@@ -191,5 +192,10 @@ module.exports = {
 
 ```
 ---
-결과  
+```
+pm2 start ecosystem.config.js --name 앱 이름
+pm2 start ecosystem.config.js --env
+pm2 start ecosystem.config.js --env production
+```
+결과 - pm2 start ecosystem.config.js
 ![ex_screenshot](./screenshot/img1.png)
