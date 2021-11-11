@@ -6,6 +6,17 @@ if (cluster.isMaster) {
     for (let i = 0; i < npmCPUs; i+=1) {
         cluster.fork();
     }
+    var worker = cluster.fork();
+
+    // 생성한 워커가 보내는 메시지
+    worker.on('message', (message) => {
+        console.log('To. 마스터');
+        console.log(`${worker.process.pid} 워커의 메시지: ${message}`)
+    });
+
+    // 생성한 워커에게 보내는 메시지
+    worker.send('마스터가 보내는 메시지');
+
     // 워커 종료
     cluster.on('exit', (worker, code, signal) => {
         console.log(`${worker.process.pid} 번 종료`);
@@ -42,6 +53,17 @@ if (cluster.isMaster) {
     });
 
     console.log(`${process.pid}번 워커 실행`);
+}
+
+if (cluster.isWorker) {
+    // 마스터가 보낸 메시지
+    process.on('message', (message) => {
+        console.log('To. 워커');
+        console.log(`마스터의 메시지: ${message}`);
+    });
+
+    // 마스터에게 보내는 메시지
+    process.send(`${process.pid} pid를 가진 워커가 보내는 메시지`);
 }
 
 // if (cluster.isMaster) {
